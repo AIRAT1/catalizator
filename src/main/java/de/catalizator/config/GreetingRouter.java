@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.*;
 
+import java.util.Map;
+
 @Configuration
 public class GreetingRouter {
     @Bean
@@ -18,12 +20,8 @@ public class GreetingRouter {
                 .route(route, greetingHandler::hello)
                 .andRoute(
                         RequestPredicates.GET("/"),
-                        serverRequest -> {
-                            return ServerResponse
-                                    .ok()
-                                    .contentType(MediaType.TEXT_PLAIN)
-                                    .body(BodyInserters.fromValue("Main Page"));
-                        }
+                        greetingHandler::index
+
                 );
     }
 }
